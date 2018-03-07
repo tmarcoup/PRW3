@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>PRW3</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style media="screen">
+        .container>div.row{
+            margin-bottom: 50px;
+        }
+
+        .tab-content{
+            padding-top: 20px;
+        }
+
+        #tv-channels>.row>div,
+        #radio-channels>.row>div {
+            align-self: center;
+        }
+
+        #radio-channels {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #tv-channels>.row>div>.men-itm,
+        #radio-channels>.row>div>.men-itm> {
+            align-self: center;
+        }
+
+        #tv-channels>.row>div>.men-itm>.form-check-label,
+        #radio-channels>.row>div>.men-itm>.form-check-label {
+            width: -moz-available;
+        }
+
+        .changeChart>div{
+            align-self: center;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .changeChart>div>button{
+            width: 42px;
+        }
+
+        canvas{
+            height: 500px !important;
+        }
+
+        footer{
+            padding-top: 50px;
+        }
+    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Temps consacré à regarder la télévision et à écouter la radio</h1>
+                <p class="lead text-muted">En Suisse romande en minutes par jour</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+
+                <ul class="nav nav-tabs justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="radio-tab" data-toggle="tab" href="#radio" role="tab" aria-controls="radio" aria-selected="true">Radio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tv-tab" data-toggle="tab" href="#tv" role="tab" aria-controls="tv" aria-selected="true">TV</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="compare-tab" data-toggle="tab" href="#compare" role="tab" aria-controls="compare" aria-selected="true">Comparaison Radio-TV</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="row tab-pane fade show active" id="radio" role="tabpanel" aria-labelledby="radio-tab">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 style="text-align: center;">Temps consacré à écouter la radio</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="radio-years" class="col-md-2 col-form-label offset-md-2" style="text-align:right;">Année:</label>
+                                <select class="form-control col-md-4" name="radio-years" id="radio-years">
+                                    <option v-for="item in sortedYear" class="men-itm" v-on:click="changeRadioYear(item)">
+                                        {{ item }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="row justify-content-center changeChart">
+                                <div class="col-3">
+                                    Changer graphique:
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-default" id="changeRadioChartDoughnut"><i class="fas fa-chart-pie"></i></button>
+                                    <button type="button" class="btn btn-default" id="changeRadioChartBars"><i class="fas fa-chart-bar"></i></button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <canvas class="chart" id="radioYearBarChart" width="700" height="500"></canvas>
+                                </div>
+                                <div class="col-md-12">
+                                    <canvas class="chart" id="radioYearDoughnutChart" width="700" height="500"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row tab-pane fade" id="tv" role="tabpanel" aria-labelledby="tv-tab">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 style="text-align: center;">Temps consacré à regarder la télévision</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="tv-years" class="col-md-2 col-form-label offset-md-2" style="text-align:right;">Année:</label>
+                                <select class="form-control col-md-4" name="tv-years" id="tv-years">
+                                    <option v-for="item in sortedYear" class="men-itm" v-on:click="changeTVYear(item)">
+                                        {{ item }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="row justify-content-center changeChart">
+                                <div class="col-3">
+                                    Changer graphique:
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-default" id="changeTVChartDoughnut"><i class="fas fa-chart-pie"></i></button>
+                                    <button type="button" class="btn btn-default" id="changeTVChartBars"><i class="fas fa-chart-bar"></i></button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <canvas class="chart" id="tvYearBarChart" width="700" height="500"></canvas>
+                                </div>
+                                <div class="col-md-12">
+                                    <canvas class="chart" id="tvYearDoughnutChart" width="700" height="500"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row tab-pane fade" id="compare" role="tabpanel" aria-labelledby="compare-tab">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 style="text-align: center;">Comparaison du temps entre radio et télévision</h4>
+                            </div>
+                        </div>
+
+                        <div id="tv-channels">
+                            <div class="row" align="center">
+                                <div class="col-4">Télévision</div>
+                                <div class="col-4">
+                                    <div v-for="(item, index) in sortedChannels(true)" class="men-itm" v-on:click="changeTVChannel(item.channel, $event)">
+                                        <input class="form-check-input" type="checkbox" value="" v-bind:id="'channel-'+index" v-bind:checked="item.checked">
+                                        <label class="form-check-label" v-bind:for="'channel-'+index">{{ item.channel }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div v-for="(item, index) in sortedChannels(false)" class="men-itm" v-on:click="changeTVChannel(item.channel, $event)">
+                                        <input class="form-check-input" type="checkbox" value="" v-bind:id="'channels-'+index" v-bind:checked="item.checked">
+                                        <label class="form-check-label" v-bind:for="'channels-'+index">{{ item.channel }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="radio-channels">
+                            <div class="row" align="center">
+                                <div class="col-4">Radio</div>
+                                <div class="col-4">
+                                    <div v-for="(item, index) in sortedRadios(true)" class="men-itm" v-on:click="changeRadios(item.radio, $event)">
+                                        <input class="form-check-input" type="checkbox" value="" v-bind:id="'radio-'+index" v-bind:checked="item.checked">
+                                        <label class="form-check-label" v-bind:for="'radio-'+index">{{ item.radio }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div v-for="(item, index) in sortedRadios(false)" class="men-itm" v-on:click="changeRadios(item.radio, $event)">
+                                        <input class="form-check-input" type="checkbox" value="" v-bind:id="'radios-'+index" v-bind:checked="item.checked">
+                                        <label class="form-check-label" v-bind:for="'radios-'+index">{{ item.radio }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center changeChart">
+                            <div class="col-3">
+                                Changer graphique:
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-default" id="changeCompareChartLines"><i class="fas fa-chart-line"></i></button>
+                                <button type="button" class="btn btn-default" id="changeCompareChartBars"><i class="fas fa-chart-bar"></i></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <canvas class="chart" id="tvRadioChannelLinesChart" width="700" height="500"></canvas>
+                            </div>
+                            <div class="col-md-12">
+                                <canvas class="chart" id="tvRadioChannelBarsChart" width="700" height="500"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Haut de la page</a>
+            </p>
+            <p>CPNV © Thomas Marcoup 2018</p>
+        </div>
+    </footer>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"></script>
+
+
+    <script type="text/javascript" src="data/processed/RADIO_DATA.js"></script>
+    <script type="text/javascript" src="data/processed/TV_DATA.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+
+</body>
+
+</html>
