@@ -6,11 +6,11 @@
     <title>PRW3</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style media="screen">
-        .container>div.row{
+        .container>div.row {
             margin-bottom: 50px;
         }
 
-        .tab-content{
+        .tab-content {
             padding-top: 20px;
         }
 
@@ -34,21 +34,24 @@
             width: -moz-available;
         }
 
-        .changeChart>div{
+        .changeChart>div {
             align-self: center;
             margin-top: 5px;
             margin-bottom: 5px;
         }
-        .changeChart>div>button{
+
+        .changeChart>div>button {
             width: 42px;
         }
 
-        canvas{
+        canvas {
             height: 500px !important;
         }
 
-        footer{
-            padding-top: 50px;
+        footer {
+          margin-top: 50px;
+          border-top: solid 1px #e9ecef;
+          padding-top: 10px;
         }
     </style>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -75,6 +78,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="compare-tab" data-toggle="tab" href="#compare" role="tab" aria-controls="compare" aria-selected="true">Comparaison Radio-TV</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">A propos</a>
                     </li>
                 </ul>
 
@@ -150,77 +156,110 @@
                     </div>
 
                     <div class="row tab-pane fade" id="compare" role="tabpanel" aria-labelledby="compare-tab">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4 style="text-align: center;">Comparaison du temps entre radio et télévision</h4>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 style="text-align: center;">Comparaison du temps entre radio et télévision</h4>
+                                </div>
                             </div>
-                        </div>
 
-                        <div id="tv-channels">
-                            <div class="row" align="center">
-                                <div class="col-4">Télévision</div>
-                                <div class="col-4">
-                                    <div v-for="(item, index) in sortedChannels(true)" class="men-itm" v-on:click="changeTVChannel(item.channel, $event)">
-                                        <input class="form-check-input" type="checkbox" value="" v-bind:id="'channel-'+index" v-bind:checked="item.checked">
-                                        <label class="form-check-label" v-bind:for="'channel-'+index">{{ item.channel }}</label>
+                            <div id="tv-channels">
+                                <div class="row" align="center">
+                                    <div class="col-4">Télévision</div>
+                                    <div class="col-4">
+                                        <div v-for="(item, index) in sortedChannels(true)" class="men-itm" v-on:click="changeTVChannel(item.channel, $event)">
+                                            <input class="form-check-input" type="checkbox" value="" v-bind:id="'channel-'+index" v-bind:checked="item.checked">
+                                            <label class="form-check-label" v-bind:for="'channel-'+index">{{ item.channel }}</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-4">
-                                    <div v-for="(item, index) in sortedChannels(false)" class="men-itm" v-on:click="changeTVChannel(item.channel, $event)">
-                                        <input class="form-check-input" type="checkbox" value="" v-bind:id="'channels-'+index" v-bind:checked="item.checked">
-                                        <label class="form-check-label" v-bind:for="'channels-'+index">{{ item.channel }}</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="radio-channels">
-                            <div class="row" align="center">
-                                <div class="col-4">Radio</div>
-                                <div class="col-4">
-                                    <div v-for="(item, index) in sortedRadios(true)" class="men-itm" v-on:click="changeRadios(item.radio, $event)">
-                                        <input class="form-check-input" type="checkbox" value="" v-bind:id="'radio-'+index" v-bind:checked="item.checked">
-                                        <label class="form-check-label" v-bind:for="'radio-'+index">{{ item.radio }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div v-for="(item, index) in sortedRadios(false)" class="men-itm" v-on:click="changeRadios(item.radio, $event)">
-                                        <input class="form-check-input" type="checkbox" value="" v-bind:id="'radios-'+index" v-bind:checked="item.checked">
-                                        <label class="form-check-label" v-bind:for="'radios-'+index">{{ item.radio }}</label>
+                                    <div class="col-4">
+                                        <div v-for="(item, index) in sortedChannels(false)" class="men-itm" v-on:click="changeTVChannel(item.channel, $event)">
+                                            <input class="form-check-input" type="checkbox" value="" v-bind:id="'channels-'+index" v-bind:checked="item.checked">
+                                            <label class="form-check-label" v-bind:for="'channels-'+index">{{ item.channel }}</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row justify-content-center changeChart">
-                            <div class="col-3">
-                                Changer graphique:
+                            <div id="radio-channels">
+                                <div class="row" align="center">
+                                    <div class="col-4">Radio</div>
+                                    <div class="col-4">
+                                        <div v-for="(item, index) in sortedRadios(true)" class="men-itm" v-on:click="changeRadios(item.radio, $event)">
+                                            <input class="form-check-input" type="checkbox" value="" v-bind:id="'radio-'+index" v-bind:checked="item.checked">
+                                            <label class="form-check-label" v-bind:for="'radio-'+index">{{ item.radio }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div v-for="(item, index) in sortedRadios(false)" class="men-itm" v-on:click="changeRadios(item.radio, $event)">
+                                            <input class="form-check-input" type="checkbox" value="" v-bind:id="'radios-'+index" v-bind:checked="item.checked">
+                                            <label class="form-check-label" v-bind:for="'radios-'+index">{{ item.radio }}</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-2">
-                                <button type="button" class="btn btn-default" id="changeCompareChartLines"><i class="fas fa-chart-line"></i></button>
-                                <button type="button" class="btn btn-default" id="changeCompareChartBars"><i class="fas fa-chart-bar"></i></button>
+                            <div class="row justify-content-center changeChart">
+                                <div class="col-3">
+                                    Changer graphique:
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-default" id="changeCompareChartLines"><i class="fas fa-chart-line"></i></button>
+                                    <button type="button" class="btn btn-default" id="changeCompareChartBars"><i class="fas fa-chart-bar"></i></button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <canvas class="chart" id="tvRadioChannelLinesChart" width="700" height="500"></canvas>
-                            </div>
-                            <div class="col-md-12">
-                                <canvas class="chart" id="tvRadioChannelBarsChart" width="700" height="500"></canvas>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <canvas class="chart" id="tvRadioChannelLinesChart" width="700" height="500"></canvas>
+                                </div>
+                                <div class="col-md-12">
+                                    <canvas class="chart" id="tvRadioChannelBarsChart" width="700" height="500"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <div class="row tab-pane fade" id="about" role="tabpanel" aria-labelledby="compare-tab">
+                        <div class="col-md-12" style="padding: 0px 50px;">
+                            <h2>Données</h2>
+                            <p>
+                                Toutes les données proviennent du canton de Vaud.</br>
+                                Elles contiennent les informations du temps moyen consacré à regarder la télévision
+                                et à écouter la radio entre 1998 et 2016. Ces données sont issues de sondages.
+                                <br/>
+                                Sources données:
+                                <ul>
+                                    <li>
+                                        <a href="http://www.scris.vd.ch/Default.aspx?DocID=6916&DomId=2325">Statistiques TV</a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.scris.vd.ch/Default.aspx?DocID=1371&DomId=2325">Statistiques Radio</a>
+                                    </li>
+                                </ul>
+                                <br/><b>Le canton de Vaud n'est aucunement affilié à ce site.</b>
+
+                            </p>
+
+                            <h2>Outils</h2>
+                            <p>Ce site est développé à l'aide de :</p>
+                            <ul>
+                                <li><a href="https://vuejs.org/">Vue.js</a> pour la gestion des données.</li>
+                                <li><a href="http://www.chartjs.org/">Chart.js</a> pour la création des graphiques.</li>
+                                <li><a href="https://jquery.com/">jQuery</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <footer class="text-muted">
+    <footer>
         <div class="container">
-            <p class="float-right">
-                <a href="#">Haut de la page</a>
-            </p>
-            <p>CPNV © Thomas Marcoup 2018</p>
+            <div class="float-right">
+                Sources données:
+                <a href="http://www.scris.vd.ch/Default.aspx?DocID=6916&DomId=2325">TV</a>/
+                <a href="http://www.scris.vd.ch/Default.aspx?DocID=1371&DomId=2325">Radio</a>
+            </div>
+            <p> CPNV © <a href="https://www.linkedin.com/in/itthomasmarcoup/">Thomas Marcoup</a> 2018</p>
         </div>
     </footer>
 
