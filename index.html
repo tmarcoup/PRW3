@@ -168,13 +168,13 @@
                                     <div class="col-4">Télévision</div>
                                     <div class="col-4">
                                         <div v-for="(item, index) in sortedChannels(true)" class="men-itm" v-on:click="changeTVChannel(item.channel, $event)">
-                                            <input class="form-check-input" type="checkbox" value="" v-bind:id="'channel-'+index" v-bind:checked="item.checked">
+                                            <input class="form-check-input" type="checkbox" v-bind:value="item.channel" v-bind:id="'channel-'+index" v-bind:checked="item.checked">
                                             <label class="form-check-label" v-bind:for="'channel-'+index">{{ item.channel }}</label>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div v-for="(item, index) in sortedChannels(false)" class="men-itm" v-on:click="changeTVChannel(item.channel, $event)">
-                                            <input class="form-check-input" type="checkbox" value="" v-bind:id="'channels-'+index" v-bind:checked="item.checked">
+                                            <input class="form-check-input" type="checkbox" v-bind:value="item.channel" v-bind:id="'channels-'+index" v-bind:checked="item.checked">
                                             <label class="form-check-label" v-bind:for="'channels-'+index">{{ item.channel }}</label>
                                         </div>
                                     </div>
@@ -185,13 +185,13 @@
                                     <div class="col-4">Radio</div>
                                     <div class="col-4">
                                         <div v-for="(item, index) in sortedRadios(true)" class="men-itm" v-on:click="changeRadios(item.radio, $event)">
-                                            <input class="form-check-input" type="checkbox" value="" v-bind:id="'radio-'+index" v-bind:checked="item.checked">
+                                            <input class="form-check-input" type="checkbox" v-bind:value="item.radio" v-bind:id="'radio-'+index" v-bind:checked="item.checked">
                                             <label class="form-check-label" v-bind:for="'radio-'+index">{{ item.radio }}</label>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div v-for="(item, index) in sortedRadios(false)" class="men-itm" v-on:click="changeRadios(item.radio, $event)">
-                                            <input class="form-check-input" type="checkbox" value="" v-bind:id="'radios-'+index" v-bind:checked="item.checked">
+                                            <input class="form-check-input" type="checkbox" v-bind:value="item.radio" v-bind:id="'radios-'+index" v-bind:checked="item.checked">
                                             <label class="form-check-label" v-bind:for="'radios-'+index">{{ item.radio }}</label>
                                         </div>
                                     </div>
@@ -228,10 +228,10 @@
                                 Sources données:
                                 <ul>
                                     <li>
-                                        <a href="http://www.scris.vd.ch/Default.aspx?DocID=6916&DomId=2325">Statistiques TV</a>
+                                        <a href="http://www.scris.vd.ch/Default.aspx?DocID=6916&DomId=2325" target="_blank">Statistiques TV</a>
                                     </li>
                                     <li>
-                                        <a href="http://www.scris.vd.ch/Default.aspx?DocID=1371&DomId=2325">Statistiques Radio</a>
+                                        <a href="http://www.scris.vd.ch/Default.aspx?DocID=1371&DomId=2325" target="_blank">Statistiques Radio</a>
                                     </li>
                                 </ul>
                                 <br/><b>Le canton de Vaud n'est aucunement affilié à ce site.</b>
@@ -241,9 +241,9 @@
                             <h2>Outils</h2>
                             <p>Ce site est développé à l'aide de :</p>
                             <ul>
-                                <li><a href="https://vuejs.org/">Vue.js</a> pour la gestion des données.</li>
-                                <li><a href="http://www.chartjs.org/">Chart.js</a> pour la création des graphiques.</li>
-                                <li><a href="https://jquery.com/">jQuery</a></li>
+                                <li><a href="https://vuejs.org/" target="_blank">Vue.js</a> pour la gestion des données.</li>
+                                <li><a href="http://www.chartjs.org/" target="_blank">Chart.js</a> pour la création des graphiques.</li>
+                                <li><a href="https://jquery.com/" target="_blank">jQuery</a></li>
                             </ul>
                         </div>
                     </div>
@@ -256,10 +256,10 @@
         <div class="container">
             <div class="float-right">
                 Sources données:
-                <a href="http://www.scris.vd.ch/Default.aspx?DocID=6916&DomId=2325">TV</a>/
-                <a href="http://www.scris.vd.ch/Default.aspx?DocID=1371&DomId=2325">Radio</a>
+                <a href="http://www.scris.vd.ch/Default.aspx?DocID=6916&DomId=2325" target="_blank">TV</a>/
+                <a href="http://www.scris.vd.ch/Default.aspx?DocID=1371&DomId=2325" target="_blank">Radio</a>
             </div>
-            <p> CPNV © <a href="https://www.linkedin.com/in/itthomasmarcoup/">Thomas Marcoup</a> 2018</p>
+            <p> CPNV © <a href="https://www.linkedin.com/in/itthomasmarcoup/" target="_blank">Thomas Marcoup</a> 2018</p>
         </div>
     </footer>
 
@@ -275,6 +275,7 @@
     <script type="text/javascript" src="data/processed/RADIO_DATA.js"></script>
     <script type="text/javascript" src="data/processed/TV_DATA.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/log.js"></script>
 
 </body>
 
